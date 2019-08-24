@@ -1,5 +1,6 @@
 
 const ProxyCreator = artifacts.require('./ProxyCreator.sol');
+const Proxy = artifacts.require('./Proxy');
 
 contract('ProxyCreator', function (accounts) {
     beforeEach(async function () {
@@ -18,6 +19,12 @@ contract('ProxyCreator', function (accounts) {
         const result = await this.creator.proxies('0x01');
         
         assert.ok(parseInt(result) != 0);
+        
+        const proxy = await Proxy.at(result);
+        
+        const whitelisted = await proxy.whitelist(accounts[0]);
+        
+        assert.ok(whitelisted);
     });
 });
 

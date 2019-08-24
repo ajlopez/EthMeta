@@ -7,6 +7,7 @@ contract ProxyCreator {
     
     function createProxy(bytes32 hash) public returns (address) {
         Proxy proxy = new Proxy();
+        proxy.setWhitelist(msg.sender, true);
         proxies[hash] = address(proxy);
     }
 }
