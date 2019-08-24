@@ -1,18 +1,25 @@
 pragma solidity >=0.5.0 <0.6.0;
 
 contract Proxy {
-    address owner;
+    mapping (address => bool) public whitelist;
     
     constructor() public {
-        owner = msg.sender;
+        whitelist[msg.sender] = true;
     }
     
-    function forward(address to, uint value, bytes memory data) public {
-        require(msg.sender == owner);
-        
+    modifier onlyWhitelisted() {
+        require(whitelist[msg.sender]);
+        _;
+    }
+    
+    function forward(address to, uint value, bytes memory data) public onlyWhitelisted {
         assembly {
             pop(call(gas, to, value, add(data, 0x20), mload(data), 0, 0))
         }
+    }
+    
+    function setWhitelist(address addr, bool value) public onlyWhitelisted {
+        whitelist[addr] = value;
     }
 }
 

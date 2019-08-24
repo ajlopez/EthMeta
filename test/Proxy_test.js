@@ -31,5 +31,25 @@ contract('Proxy', function (accounts) {
         
         assert.equal(result, 0);
     });
+    
+    it('whitelist account', async function () {
+        await this.proxy.setWhitelist(accounts[1], true);
+        
+        const data = incrementHash;
+        
+        await this.proxy.forward(this.counter.address, 0, data, { from: accounts[1] });
+        
+        const result = (await this.counter.counter()).toNumber();
+        
+        assert.equal(result, 1);
+    });
+    
+    it('only whitelisted account could invoke whitelist account', async function () {
+        await expectThrow(this.proxy.setWhitelist(accounts[1], true, { from: accounts[2] }));
+        
+        const result = await this.proxy.whitelist(accounts[1]);
+        
+        assert.equal(result, false);
+    });
 });
 
