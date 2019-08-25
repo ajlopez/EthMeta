@@ -6,6 +6,8 @@ contract ProxyCreator {
     mapping(bytes32 => address) public proxies;
     
     function createProxy(bytes32 hash) public returns (address) {
+        require(proxies[hash] == address(0));
+        
         Proxy proxy = new Proxy();
         proxy.setWhitelist(msg.sender, true);
         proxies[hash] = address(proxy);
