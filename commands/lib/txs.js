@@ -88,10 +88,35 @@ async function transferValue(host, receiver, amount, options) {
     }
 }
 
+async function sendTransaction(host, sender, tx) {
+    const nonce = await host.getTransactionCount(sender.address, 'pending');
+    
+    tx.nonce = nonce;
+    
+    const xtx = new Tx(tx);
+    const privateKey = new Buffer(sender.privateKey.substring(2), 'hex');
+    xtx.sign(privateKey);
+
+    const serializedTx = xtx.serialize();
+
+    return await host.sendRawTransaction('0x' + serializedTx.toString('hex'));
+}
+
+async function getTransactionReceipt(host, txhash) {
+    let txr = await host.getTransactionReceiptByHash(txhash);
+    
+    while (txr == null)
+        txr = await host.getTransactionReceiptByHash(txhash);
+    
+    return txr;
+}
+
 module.exports = {
     call: callContract,
     invoke: invokeContract,
-    transfer: transferValue
+    transfer: transferValue,
+    send: sendTransaction,
+    receipt: getTransactionReceipt
 };
 
 
