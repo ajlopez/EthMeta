@@ -9,6 +9,8 @@
   "license": "MIT",
   "dependencies": {
     "ethereumjs-tx": "^2.1.0",
-    "ethereumjs-util": "^6.1.0"
+    "ethereumjs-util": "^6.1.0",
+    "rskapi": "0.0.10",
+    "simpleabi": "0.0.3"
   }
 }
