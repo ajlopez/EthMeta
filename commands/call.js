@@ -12,17 +12,15 @@ const contract = process.argv[2];
 const fn = process.argv[3];
 let args = process.argv[4];
 
-if (args) {
+if (args)
     args = args.split(';');
-    args = simpleabi.encodeValues(args);
-}
 
 const tx = {
     to: config.contracts[contract] ? config.contracts[contract] : contract,
     value: 0,
     gas: config.options && config.options.gas != null ? config.options.gas : 5000000,
     gasPrice: config.options && config.options.gasPrice != null ? config.options.gasPrice :60000000,
-    data: '0x' + keccak256(fn).substring(0, 8) + (args ? args : '')
+    data: '0x' + simpleabi.encodeCall(fn, args)
 };
 
 (async function() {
