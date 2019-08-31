@@ -2,16 +2,7 @@
 const simpleabi = require('simpleabi');
 const Tx = require('ethereumjs-tx');
 
-async function callContract(host, address, fnhash, args, options) {
-    const tx = {
-        from: options.from.address ? options.from.address : options.from,
-        gas: options.gas || 1000000,
-        gasPrice: options.gasPrice || 0,
-        value: options.value || 0,
-        to: address,
-        data: fnhash + simpleabi.encodeValues(args)
-    };
-    
+async function callContract(host, tx) {
     return await host.callTransaction(tx);
 }
 

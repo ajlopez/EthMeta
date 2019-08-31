@@ -15,8 +15,8 @@ const host = rskapi.host(config.host);
 
 const tx = {
     value: 0,
-    gas: 5000000,
-    gasPrice: 60000000,
+    gas: config.options && config.options.gas != null ? config.options.gas : 5000000,
+    gasPrice: config.options && config.options.gasPrice != null ? config.options.gasPrice :60000000,
     data: ProxyCreator.bytecode
 };
 
