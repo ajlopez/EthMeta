@@ -9,6 +9,12 @@ Meta Transactions for Ethereum/RSK, WIP
 - [OpenZeppelin Gas Station Network](https://gsn.openzeppelin.com)
 - [Build your app with the Gas Station Network](https://blog.openzeppelin.com/build-your-app-with-the-gas-station-network/)
 
+## To Do
+
+- Assign to each user, not only a `Proxy` contract instance, but also a real account without balance.
+- Sign the metatransactions with the user account
+- Relay server exposed via JSON RPC
+
 ## License
 
 MIT
