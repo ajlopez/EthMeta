@@ -40,7 +40,7 @@ If you are using RSK testnet or other network, create a new account:
 node newaccount
 ```
 
-Then, fund the account. In RSK testnet, you can use [https://faucet.testnet.rsk.co].
+Then, fund the account. In RSK testnet, you can use (https://faucet.testnet.rsk.co)[https://faucet.testnet.rsk.co].
 
 Deply the `ProxyCreator` and `Counter` contracts:
 
