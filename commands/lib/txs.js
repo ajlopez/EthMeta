@@ -80,17 +80,23 @@ async function transferValue(host, receiver, amount, options) {
 }
 
 async function sendTransaction(host, sender, tx) {
-    const nonce = await host.getTransactionCount(sender.address, 'pending');
-    
-    tx.nonce = nonce;
-    
-    const xtx = new Tx(tx);
-    const privateKey = new Buffer(sender.privateKey.substring(2), 'hex');
-    xtx.sign(privateKey);
+    if (sender.address) {
+        const nonce = await host.getTransactionCount(sender.address, 'pending');
+        
+        tx.nonce = nonce;
+        
+        const xtx = new Tx(tx);
+        const privateKey = new Buffer(sender.privateKey.substring(2), 'hex');
+        xtx.sign(privateKey);
 
-    const serializedTx = xtx.serialize();
+        const serializedTx = xtx.serialize();
 
-    return await host.sendRawTransaction('0x' + serializedTx.toString('hex'));
+        return await host.sendRawTransaction('0x' + serializedTx.toString('hex'));
+    }
+    else {
+        tx.from = sender;
+        return await host.sendTransaction(tx);
+    }
 }
 
 async function getTransactionReceipt(host, txhash) {

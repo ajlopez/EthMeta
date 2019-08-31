@@ -10,7 +10,7 @@ const host = rskapi.host(config.host);
 
 const contract = process.argv[2];
 const fn = process.argv[3];
-let args = process.argv[3];
+let args = process.argv[4];
 
 if (args) {
     args = args.split(';');
