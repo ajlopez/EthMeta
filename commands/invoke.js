@@ -13,8 +13,19 @@ let contract = process.argv[3];
 const fn = process.argv[4];
 let args = process.argv[5];
 
+function isNumber(text) {
+    const digit = text[0];
+    
+    return digit >= '0' && digit <= '9' && text.substring(0,2).toLowerCase() !== '0x';
+}
+
 if (args) {
     args = args.split(';');
+    
+    for (let k = 0, l = args.length; k < l; k++)
+        if (isNumber(args[k]))
+            args[k] = parseInt(args[k]);
+        
     args = keccak256(fn).substring(0, 8) + simpleabi.encodeValues(args);
 }
 else
