@@ -11,6 +11,10 @@ Meta Transactions for Ethereum/RSK, WIP
 - [Driving User Adoption With Meta Transactions](https://medium.com/originprotocol/driving-user-adoption-with-meta-transactions-3539aa6c5ae3)
 - [Gas Station Network EIP](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1613.md)
 
+## Versions
+
+- 0.0.1: Plain users (no account associated)
+
 ## To Do
 
 - Assign to each user, not only a `Proxy` contract instance, but also a real account without balance.
