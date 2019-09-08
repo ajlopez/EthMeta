@@ -29,19 +29,19 @@ const tx2 = {
 
 (async function() {
     try {
-    const txh = await txs.send(host, config.account, tx);
-    console.log('transaction', txh);
-    const txr = await txs.receipt(host, txh);
-    config.contracts.proxyManager = txr.contractAddress;
-    console.log('ProxyManager at', config.contracts.proxyManager);
-    
-    const tx2h = await txs.send(host, config.account, tx2);
-    console.log('transaction', tx2h);
-    const tx2r = await txs.receipt(host, tx2h);
-    config.contracts.counter = tx2r.contractAddress;
-    console.log('Counter at', config.contracts.counter);
-    
-    fs.writeFileSync('./config.json', JSON.stringify(config, null, 4));
+        const txh = await txs.send(host, config.account, tx);
+        console.log('transaction', txh);
+        const txr = await txs.receipt(host, txh);
+        config.contracts.proxyManager = txr.contractAddress;
+        console.log('ProxyManager at', config.contracts.proxyManager);
+        
+        const tx2h = await txs.send(host, config.account, tx2);
+        console.log('transaction', tx2h);
+        const tx2r = await txs.receipt(host, tx2h);
+        config.contracts.counter = tx2r.contractAddress;
+        console.log('Counter at', config.contracts.counter);
+        
+        fs.writeFileSync('./config.json', JSON.stringify(config, null, 4));
     } catch (ex) {
         console.log(ex);
     }

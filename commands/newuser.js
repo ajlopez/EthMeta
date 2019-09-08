@@ -26,11 +26,16 @@ const tx = {
 };
 
 (async function() {
-    const txh = await txs.send(host, config.account, tx);
-    console.log('transaction', txh);
-    const txr = await txs.receipt(host, txh);
-    config.users[user] = account;
-    fs.writeFileSync('./config.json', JSON.stringify(config, null, 4));
-    console.log('done');
+    try {
+        const txh = await txs.send(host, config.account, tx);
+        console.log('transaction', txh);
+        const txr = await txs.receipt(host, txh);
+        config.users[user] = account;
+        fs.writeFileSync('./config.json', JSON.stringify(config, null, 4));
+        console.log('done');
+    }
+    catch (ex) {
+        console.log(ex);
+    }
 })();
 
