@@ -14,11 +14,10 @@ Meta Transactions for Ethereum/RSK, WIP
 ## Versions
 
 - 0.0.1: Plain users (no account associated)
+- Current: Users with associated account. They sign the proxy invocation data. 
 
 ## To Do
 
-- Assign to each user, not only a `Proxy` contract instance, but also a real account without balance.
-- Sign the metatransactions with the user account
 - Relay server exposed via JSON RPC
 
 ## License
