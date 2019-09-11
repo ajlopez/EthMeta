@@ -17,6 +17,14 @@ contract UtilityToken is ERC20, ERC20Mintable, PayerRole {
             users[account] = true;
             
         return result;
-    }    
+    }
+    
+    function pay(address user, address recipient, uint256 amount) public onlyPayer returns (bool) {
+        require(users[user]);
+        
+        _transfer(user, recipient, amount);
+        
+        return true;
+    }
 }
 

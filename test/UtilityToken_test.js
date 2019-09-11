@@ -54,5 +54,39 @@ contract('UtilityToken', function (accounts) {
         const isuser = await this.token.users(bob);
         assert.ok(isuser);        
     });
+    
+    it('pay from user to account', async function () {
+        await this.token.mint(bob, 1000);
+        await this.token.pay(bob, charlie, 400);
+        
+        const balance1 = await this.token.balanceOf(bob);
+        assert.equal(balance1, 600);
+        
+        const balance2 = await this.token.balanceOf(charlie);
+        assert.equal(balance2, 400);
+    });    
+    
+    it('cannot pay using non user', async function () {
+        await this.token.mint(bob, 1000);
+        await this.token.pay(bob, charlie, 400);
+        await expectThrow(this.token.pay(charlie, alice, 200));
+        
+        const balance1 = await this.token.balanceOf(bob);
+        assert.equal(balance1, 600);
+        
+        const balance2 = await this.token.balanceOf(charlie);
+        assert.equal(balance2, 400);
+    });    
+    
+    it('non payer cannot pay', async function () {
+        await this.token.mint(bob, 1000);
+        await expectThrow(this.token.pay(bob, charlie, 400, { from: charlie }));
+        
+        const balance1 = await this.token.balanceOf(bob);
+        assert.equal(balance1, 1000);
+        
+        const balance2 = await this.token.balanceOf(charlie);
+        assert.equal(balance2, 0);
+    });    
 });
 
