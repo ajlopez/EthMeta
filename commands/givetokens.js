@@ -33,8 +33,6 @@ const tx2 = {
     console.log('proxy', result);
     
     tx2.data = '0x' + simpleabi.encodeCall('mint(address,uint256)', [ result, amount ]);
-
-    console.dir(tx2);
     
     const tx2h = await txs.send(host, config.account, tx2);
     console.log('transaction', tx2h);

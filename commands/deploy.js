@@ -45,7 +45,6 @@ const tx4 = {
 };
 
 const tx5 = {
-    to: config.contracts.token,
     value: 0,
     gas: 5000000,
     gasPrice: 60000000
@@ -77,7 +76,8 @@ const tx5 = {
         const tx4r = await txs.receipt(host, tx4h);
         config.contracts.game = tx4r.contractAddress;
         console.log('Game at', config.contracts.game);
-        
+
+        tx5.to = config.contracts.token;
         tx5.data = simpleabi.encodeCall('addPayer(address)', [ config.contracts.game ]);
         const tx5h = await txs.send(host, config.account, tx5);
         console.log('transaction', tx5h);

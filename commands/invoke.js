@@ -29,9 +29,6 @@ function isNumber(text) {
     return digit >= '0' && digit <= '9' && text.substring(0,2).toLowerCase() !== '0x';
 }
 
-if (args)
-    args = args.split(';');
-
 args = simpleabi.encodeCall(fn, args);
 
 if (config.contracts[contract])
