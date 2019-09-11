@@ -3,6 +3,7 @@ const rskapi = require('rskapi');
 const simpleabi = require('simpleabi');
 const ethutils = require('ethereumjs-util');
 const txs = require('./lib/txs');
+const utils = require('./lib/utils');
 const keccak256 = require('./lib/sha3').keccak_256;
 
 const config = require('./config.json');
@@ -14,6 +15,13 @@ const address = config.users[user].address;
 let contract = process.argv[3];
 const fn = process.argv[4];
 let args = process.argv[5];
+
+if (args) {
+    args = args.split(';');
+
+    for (let k in args)
+        args[k] = utils.getAddress(config, args[k]);
+}
 
 function isNumber(text) {
     const digit = text[0];

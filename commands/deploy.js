@@ -2,9 +2,12 @@
 const rskapi = require('rskapi');
 const txs = require('./lib/txs');
 const fs = require('fs');
+const simpleabi = require('simpleabi');
 
 const ProxyManager = require('../build/contracts/ProxyManager.json');
 const Counter = require('../build/contracts/Counter.json');
+const UtilityToken = require('../build/contracts/UtilityToken.json');
+const Game = require('../build/contracts/Game.json');
 
 const config = require('./config.json');
 
@@ -27,6 +30,27 @@ const tx2 = {
     data: Counter.bytecode
 };
 
+const tx3 = {
+    value: 0,
+    gas: 5000000,
+    gasPrice: 60000000,
+    data: UtilityToken.bytecode
+};
+
+const tx4 = {
+    value: 0,
+    gas: 5000000,
+    gasPrice: 60000000,
+    data: Game.bytecode
+};
+
+const tx5 = {
+    to: config.contracts.token,
+    value: 0,
+    gas: 5000000,
+    gasPrice: 60000000
+};
+
 (async function() {
     try {
         const txh = await txs.send(host, config.account, tx);
@@ -40,6 +64,25 @@ const tx2 = {
         const tx2r = await txs.receipt(host, tx2h);
         config.contracts.counter = tx2r.contractAddress;
         console.log('Counter at', config.contracts.counter);
+        
+        const tx3h = await txs.send(host, config.account, tx3);
+        console.log('transaction', tx3h);
+        const tx3r = await txs.receipt(host, tx3h);
+        config.contracts.token = tx3r.contractAddress;
+        console.log('UtilityToken at', config.contracts.token);
+        
+        tx4.data += simpleabi.encodeValue(tx3r.contractAddress);
+        const tx4h = await txs.send(host, config.account, tx4);
+        console.log('transaction', tx4h);
+        const tx4r = await txs.receipt(host, tx4h);
+        config.contracts.game = tx4r.contractAddress;
+        console.log('Game at', config.contracts.game);
+        
+        tx5.data = simpleabi.encodeCall('addPayer(address)', [ config.contracts.game ]);
+        const tx5h = await txs.send(host, config.account, tx5);
+        console.log('transaction', tx5h);
+        const tx5r = await txs.receipt(host, tx5h);
+        console.log('Game', config.contracts.game,'is payer of', config.contracts.token);
         
         fs.writeFileSync('./config.json', JSON.stringify(config, null, 4));
     } catch (ex) {

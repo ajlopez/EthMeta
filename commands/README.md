@@ -42,7 +42,7 @@ node newaccount
 
 Then, fund the account. In RSK testnet, you can use (https://faucet.testnet.rsk.co)[https://faucet.testnet.rsk.co].
 
-Deply the `ProxyCreator` and `Counter` contracts:
+Deploy the `ProxyCreator`, `Counter`, `UtilityToken` and `Game` contracts:
 
 ```
 node deploy
@@ -86,6 +86,27 @@ You can check the new counter value running:
 node call counter counter()
 ```
 
+To invoke `Game` contract, the user should have utility tokens (each game play pays 10 utility tokens to the relayer account):
+```
+node givetokens alice 1000
+```
+
+To query the amount of tokens of a user:
+```
+node call token balanceOf(address) alice
+```
+
+To play a move to row 1, column 2
+```
+node invoke alice game play(uint8,uint8) 1;2
+```
+
+To query the owner of a game cell:
+```
+node call game owners(uint256,uint256) 1;2
+```
+
+Notice that after a game play the token balance of a user/player is decremented in 10 tokens.
 
 ## To be done
 
