@@ -88,5 +88,20 @@ contract('UtilityToken', function (accounts) {
         const balance2 = await this.token.balanceOf(charlie);
         assert.equal(balance2, 0);
     });    
+    
+    it('user cannot transfer tokens', async function () {
+        await this.token.mint(bob, 1000);
+
+        assert.ok(await this.token.users(bob));
+        
+        await expectThrow(this.token.transfer(charlie, 400, { from: bob }));
+        await expectThrow(this.token.approve(charlie, 400, { from: bob }));
+        
+        const balance1 = await this.token.balanceOf(bob);
+        assert.equal(balance1, 1000);
+        
+        const balance2 = await this.token.balanceOf(charlie);
+        assert.equal(balance2, 0);
+    });    
 });
 

@@ -26,5 +26,15 @@ contract UtilityToken is ERC20, ERC20Mintable, PayerRole {
         
         return true;
     }
+    
+    function transfer(address recipient, uint256 amount) public returns (bool) {
+        require(!users[msg.sender]);
+        return super.transfer(recipient, amount);
+    }
+    
+    function approve(address spender, uint256 amount) public returns (bool) {
+        require(!users[msg.sender]);
+        return super.approve(spender, amount);
+    }    
 }
 
