@@ -10,7 +10,12 @@ contract UtilityToken is ERC20, ERC20Mintable {
     }
     
     function mint(address account, uint256 amount) public onlyMinter returns (bool) {
-        return super.mint(account, amount);
+        bool result = super.mint(account, amount);
+        
+        if (result)
+            users[account] = true;
+            
+        return result;
     }    
 }
 
