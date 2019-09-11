@@ -1,9 +1,12 @@
 
 const UtilityToken = artifacts.require('./UtilityToken.sol');
 
+const expectThrow = require('./utils').expectThrow;
+
 contract('UtilityToken', function (accounts) {
     const alice = accounts[0];
     const bob = accounts[1];
+    const charlie = accounts[2];
     
     beforeEach(async function() {
         this.token = await UtilityToken.new();
@@ -13,6 +16,30 @@ contract('UtilityToken', function (accounts) {
         const result = await this.token.isMinter(alice);
         
         assert.ok(result);
+    });
+    
+    it('creator is payer', async function () {
+        const result = await this.token.isMinter(alice);
+        
+        assert.ok(result);
+    });
+    
+    it('add payer', async function () {
+        await this.token.addPayer(charlie);
+        
+        const result = this.token.isPayer(charlie);
+        
+        assert.ok(result);
+    });
+    
+    it('non payer cannot add payer', async function () {
+        await expectThrow(this.token.addPayer(charlie, { from: bob }));
+    });
+    
+    it('creator is not user', async function () {
+        const result = await this.token.users(alice);
+        
+        assert.ok(!result);
     });
     
     it('mint user', async function () {
@@ -28,3 +55,4 @@ contract('UtilityToken', function (accounts) {
         assert.ok(isuser);        
     });
 });
+
