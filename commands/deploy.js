@@ -78,9 +78,7 @@ const tx5 = {
         console.log('Game at', config.contracts.game);
 
         tx5.to = config.contracts.token;
-        tx5.data = simpleabi.encodeCall('addPayer(address)', [ config.contracts.game ]);
-        
-        console.dir(tx5);
+        tx5.data = '0x' + simpleabi.encodeCall('addPayer(address)', [ config.contracts.game ]);
         
         const tx5h = await txs.send(host, config.account, tx5);
         console.log('transaction', tx5h);
