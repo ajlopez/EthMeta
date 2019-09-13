@@ -79,10 +79,17 @@ const tx5 = {
 
         tx5.to = config.contracts.token;
         tx5.data = simpleabi.encodeCall('addPayer(address)', [ config.contracts.game ]);
+        
+        console.dir(tx5);
+        
         const tx5h = await txs.send(host, config.account, tx5);
         console.log('transaction', tx5h);
         const tx5r = await txs.receipt(host, tx5h);
-        console.log('Game', config.contracts.game,'is payer of', config.contracts.token);
+        
+        if (parseInt(tx5r.status))
+            console.log('Game', config.contracts.game,'is payer of', config.contracts.token);
+        else
+            console.log('failed');
         
         fs.writeFileSync('./config.json', JSON.stringify(config, null, 4));
     } catch (ex) {

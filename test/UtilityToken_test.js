@@ -19,7 +19,7 @@ contract('UtilityToken', function (accounts) {
     });
     
     it('creator is payer', async function () {
-        const result = await this.token.isMinter(alice);
+        const result = await this.token.isPayer(alice);
         
         assert.ok(result);
     });
