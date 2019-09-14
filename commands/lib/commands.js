@@ -75,7 +75,7 @@ async function invoke(host, config, sender, contract, fn, args) {
         gasPrice: config.options && config.options.gasPrice != null ? config.options.gasPrice :60000000,
         data: '0x' + simpleabi.encodeCall(fn, args)
     };
-
+    
     const txh = await txs.send(host, sender, tx);
     
     console.log('transaction', txh);

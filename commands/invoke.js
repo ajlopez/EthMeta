@@ -17,7 +17,9 @@ let args = process.argv[5];
 (async function() {
     try {
         if (config.users[user]) {
-            args = simpleabi.encodeCall(fn, await commands.arguments(host, config, args));
+            args = '0x' + simpleabi.encodeCall(fn, await commands.arguments(host, config, args));
+            
+            console.log('args', args);
             
             let proxy = await commands.call(host, config, 'proxyManager', 'proxies(address)', [ config.users[user].address ]);
             proxy = '0x' + proxy.substring(proxy.length - 40);

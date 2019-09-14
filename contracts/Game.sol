@@ -10,7 +10,7 @@ contract Game {
         token = _token;
     }
     
-    function play(uint8 nrow, uint8 ncol) public {
+    function play(uint nrow, uint ncol) public {
         require(msg.sender != tx.origin);
         require(token.pay(msg.sender, tx.origin, 10));
         

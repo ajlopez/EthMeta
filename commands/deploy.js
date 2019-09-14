@@ -15,8 +15,8 @@ const host = rskapi.host(config.host);
     try {
         await commands.deploy(host, config, 'root', 'ProxyManager', 'proxyManager');
         await commands.deploy(host, config, 'root', 'Counter', 'counter');
-        await commands.deploy(host, config, 'root', 'Game', 'game');
         await commands.deploy(host, config, 'root', 'UtilityToken', 'utoken');
+        await commands.deploy(host, config, 'root', 'Game', 'game', [ config.contracts.utoken ]);
         const result = await commands.invoke(host, config, 'root', 'utoken', 'addPayer(address)', [ 'game' ]);
         
         if (result)
