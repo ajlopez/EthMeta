@@ -32,12 +32,14 @@ If you are using the local `ganache-cli` node, or RSK node in `regtest` mode, se
 the account to use in deploy and other transactions, running:
 
 ```
-node setaccount
+node setaccount root
 ```
+
+`root` is the name of the special account that it will be used as contract deployer and relayer.
 
 If you are using RSK testnet or other network, create a new account:
 ```
-node newaccount
+node newaccount root
 ```
 
 Then, fund the account. In RSK testnet, you can use (https://faucet.testnet.rsk.co)[https://faucet.testnet.rsk.co].
@@ -47,6 +49,7 @@ Deploy the `ProxyCreator`, `Counter`, `UtilityToken` and `Game` contracts:
 ```
 node deploy
 ```
+They names are 'proxyCreator', 'counter', 'utoken' and 'game', respectively.
 
 Create a new user:
 

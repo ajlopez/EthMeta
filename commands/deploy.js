@@ -13,11 +13,11 @@ const host = rskapi.host(config.host);
 
 (async function() {
     try {
-        await commands.deploy(host, config, 'ProxyManager', 'proxyManager');
-        await commands.deploy(host, config, 'Counter', 'counter');
-        await commands.deploy(host, config, 'Game', 'game');
-        await commands.deploy(host, config, 'UtilityToken', 'utoken');
-        const result = await commands.invoke(host, config, 'utoken', 'addPayer(address)', [ 'game' ]);
+        await commands.deploy(host, config, 'root', 'ProxyManager', 'proxyManager');
+        await commands.deploy(host, config, 'root', 'Counter', 'counter');
+        await commands.deploy(host, config, 'root', 'Game', 'game');
+        await commands.deploy(host, config, 'root', 'UtilityToken', 'utoken');
+        const result = await commands.invoke(host, config, 'root', 'utoken', 'addPayer(address)', [ 'game' ]);
         
         if (result)
             console.log('game is payer of utoken');

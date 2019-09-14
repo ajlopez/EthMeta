@@ -59,11 +59,14 @@ async function call(host, config, contract, fn, args) {
     return await txs.call(host, tx);
 }
 
-async function invoke(host, config, contract, fn, args) {
+async function invoke(host, config, sender, contract, fn, args) {
     args = await processArguments(host, config, args);
     
     if (config.contracts && config.contracts[contract])
         contract = config.contracts[contract];
+    
+    if (config.accounts && config.accounts[sender])
+        sender = config.accounts[sender];
     
     const tx = {
         to: contract,
@@ -73,7 +76,7 @@ async function invoke(host, config, contract, fn, args) {
         data: '0x' + simpleabi.encodeCall(fn, args)
     };
 
-    const txh = await txs.send(host, config.account, tx);
+    const txh = await txs.send(host, sender, tx);
     
     console.log('transaction', txh);
     
@@ -89,7 +92,7 @@ async function invoke(host, config, contract, fn, args) {
     }
 }
 
-async function deploy(host, config, contractname, instancename, args) {
+async function deploy(host, config, sender, contractname, instancename, args) {
     const bytecode = require('../../build/contracts/' + contractname + '.json').bytecode;
     args = await processArguments(host, config, args);
     let data = bytecode;
@@ -97,13 +100,16 @@ async function deploy(host, config, contractname, instancename, args) {
     if (args)
         data += simpleabi.encodeValues(args);
     
+    if (config.accounts && config.accounts[sender])
+        sender = config.accounts[sender];
+    
     const tx = {
         gas: config.options && config.options.gas != null ? config.options.gas : 5000000,
         gasPrice: config.options && config.options.gasPrice != null ? config.options.gasPrice :60000000,
         data: data
     };
     
-    const txh = await txs.send(host, config.account, tx);
+    const txh = await txs.send(host, sender, tx);
     
     console.log('transaction', txh);
     

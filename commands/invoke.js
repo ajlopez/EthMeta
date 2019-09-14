@@ -30,7 +30,7 @@ let args = process.argv[5];
         
         console.log('signature', rpcsig);
         
-        await commands.invoke(host, config, proxy, 'forward(bytes,address,uint256,bytes)', [ rpcsig, contract, 0, args ]);
+        await commands.invoke(host, config, 'root', proxy, 'forward(bytes,address,uint256,bytes)', [ rpcsig, contract, 0, args ]);
     }
     catch (ex) {
         console.log(ex);

@@ -14,6 +14,8 @@ catch (ex) {
 
 var utils = require('ethereumjs-util');
 
+const name = process.argv[2];
+
 function generateRandomHexaByte() {
     var n = Math.floor(Math.random() * 255).toString(16);
     
@@ -56,7 +58,7 @@ const account = generateAddress();
 
 console.log(JSON.stringify(account, null, 4));
 
-config.account = account;
+config.accounts[name] = account;
 
 fs.writeFileSync('./config.json', JSON.stringify(config, null, 4));
 

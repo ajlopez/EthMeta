@@ -27,7 +27,7 @@ const tx = {
 
 (async function() {
     try {
-        const txh = await txs.send(host, config.account, tx);
+        const txh = await txs.send(host, config.accounts.root, tx);
         console.log('transaction', txh);
         const txr = await txs.receipt(host, txh);
         config.users[user] = account;
