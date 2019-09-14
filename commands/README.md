@@ -91,7 +91,7 @@ node call counter counter()
 
 To invoke `Game` contract, the user should have utility tokens (each game play pays 10 utility tokens to the relayer account):
 ```
-node givetokens alice 1000
+node invoke root utoken mint(address,uint256) alice;1000
 ```
 
 To query the amount of tokens of a user:
@@ -101,7 +101,7 @@ node call token balanceOf(address) alice
 
 To play a move to row 1, column 2
 ```
-node invoke alice game play(uint8,uint8) 1;2
+node invoke alice game play(uint256,uint256) 1;2
 ```
 
 To query the owner of a game cell:
