@@ -120,6 +120,7 @@ async function deploy(host, config, contractname, instancename, args) {
 module.exports = {
     deploy: deploy,
     call: call,
-    invoke: invoke
+    invoke: invoke,
+    arguments: processArguments
 };
 

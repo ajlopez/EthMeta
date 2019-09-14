@@ -3,7 +3,6 @@ const rskapi = require('rskapi');
 const txs = require('./lib/txs');
 const commands = require('./lib/commands');
 const fs = require('fs');
-const simpleabi = require('simpleabi');
 
 const config = require('./config.json');
 

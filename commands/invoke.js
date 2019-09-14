@@ -1,61 +1,28 @@
 
 const rskapi = require('rskapi');
-const simpleabi = require('simpleabi');
-const ethutils = require('ethereumjs-util');
 const txs = require('./lib/txs');
-const utils = require('./lib/utils');
-const keccak256 = require('./lib/sha3').keccak_256;
+const commands = require('./lib/commands');
+const ethutils = require('ethereumjs-util');
+const simpleabi = require('simpleabi');
 
 const config = require('./config.json');
 
 const host = rskapi.host(config.host);
 
 const user = process.argv[2];
-const address = config.users[user].address;
 let contract = process.argv[3];
 const fn = process.argv[4];
 let args = process.argv[5];
 
-if (args) {
-    args = args.split(';');
-
-    for (let k in args)
-        args[k] = utils.getAddress(config, args[k]);
-}
-
-function isNumber(text) {
-    const digit = text[0];
-    
-    return digit >= '0' && digit <= '9' && text.substring(0,2).toLowerCase() !== '0x';
-}
-
-args = simpleabi.encodeCall(fn, args);
-
-if (config.contracts[contract])
-    contract = config.contracts[contract];
-
-const tx0 = {
-    to: config.contracts.proxyManager,
-    value: 0,
-    gas: config.options && config.options.gas != null ? config.options.gas : 5000000,
-    gasPrice: config.options && config.options.gasPrice != null ? config.options.gasPrice :60000000,
-    data: '0x' + keccak256('proxies(address)').substring(0, 8) + simpleabi.encodeValue(address)
-};
-
 (async function() {
     try {
-        const proxy = await txs.call(host, tx0);
+        args = simpleabi.encodeCall(fn, await commands.arguments(host, config, args));
+        
+        let proxy = await commands.call(host, config, 'proxyManager', 'proxies(address)', [ config.users[user].address ]);
+        proxy = '0x' + proxy.substring(proxy.length - 40);
         console.log('proxy', proxy);
 
-        const tx1 = {
-            to: '0x' + proxy.substring(proxy.length - 40),
-            value: 0,
-            gas: config.options && config.options.gas != null ? config.options.gas : 5000000,
-            gasPrice: config.options && config.options.gasPrice != null ? config.options.gasPrice :60000000,
-            data: '0x' + simpleabi.encodeCall('getMessageHash(address,uint256,bytes)', [contract, 0, args])
-        };
-        
-        const msghash = await txs.call(host, tx1);
+        const msghash = await commands.call(host, config, proxy, 'getMessageHash(address,uint256,bytes)', [contract, 0, args]);
         console.log('msghash', msghash);
         
         const signature = ethutils.ecsign(new Buffer(msghash.substring(2), 'hex'), new Buffer(config.users[user].privateKey.substring(2), 'hex'));
@@ -63,24 +30,7 @@ const tx0 = {
         
         console.log('signature', rpcsig);
         
-        const data2 = simpleabi.encodeCall('forward(bytes,address,uint256,bytes)', [ rpcsig, contract, 0, args ]);
-
-        const tx = {
-            to: '0x' + proxy.substring(proxy.length - 40),
-            value: 0,
-            gas: config.options && config.options.gas != null ? config.options.gas : 5000000,
-            gasPrice: config.options && config.options.gasPrice != null ? config.options.gasPrice :60000000,
-            data: '0x' + data2
-        };
-
-        const txh = await txs.send(host, config.account, tx);
-        console.log('transaction', txh);
-        const txr = await txs.receipt(host, txh);
-
-        if (parseInt(txr.status))
-            console.log('done');
-        else
-            console.log('failed');
+        await commands.invoke(host, config, proxy, 'forward(bytes,address,uint256,bytes)', [ rpcsig, contract, 0, args ]);
     }
     catch (ex) {
         console.log(ex);
