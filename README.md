@@ -10,6 +10,7 @@ Meta Transactions for Ethereum/RSK, WIP
 - [Build your app with the Gas Station Network](https://blog.openzeppelin.com/build-your-app-with-the-gas-station-network/)
 - [Driving User Adoption With Meta Transactions](https://medium.com/originprotocol/driving-user-adoption-with-meta-transactions-3539aa6c5ae3)
 - [Gas Station Network EIP](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1613.md)
+- [Metatransactions workshop](https://www.youtube.com/watch?v=GkCu0KtFK2k)
 
 ## Versions
 
