@@ -16,7 +16,7 @@ async function processArgument(host, config, arg) {
     
     if (config.accounts && config.accounts[arg])
         if (config.accounts[arg].address)
-            return config.account[arg].address;
+            return config.accounts[arg].address;
         else
             return config.accounts[arg];
         

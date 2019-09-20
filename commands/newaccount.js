@@ -10,6 +10,9 @@ catch (ex) {
     config = {};
 }
 
+if (!config.accounts)
+    config.accounts = {};
+
 // https://ethereum.stackexchange.com/questions/39384/how-to-generate-private-key-public-key-and-address
 
 var utils = require('ethereumjs-util');
