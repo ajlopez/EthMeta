@@ -1,24 +1,23 @@
 
-const rskapi = require('rskapi');
-const txs = require('./lib/txs');
-const commands = require('./lib/commands');
 const utils = require('./lib/utils');
+const rskapi = utils.rskapi;
 
-const config = require('./config.json');
+const config = utils.loadConfiguration('./config.json');
 
-const host = rskapi.host(config.host);
+const from = utils.getAddress(config, process.argv[2]);
+const to = utils.getInstanceAddress(config, process.argv[3]);
+const fn = process.argv[4];
+let args = utils.getArguments(config, process.argv[5]);
 
-const contract = process.argv[2];
-const fn = process.argv[3];
-let args = process.argv[4];
+const client = rskapi.client(config.host);
 
 (async function() {
     try {
-        const result = await commands.call(host, config, contract, fn, args);
+        const result = await client.call(from, to, fn, args);
         console.log('result', result);
     }
     catch (ex) {
-        console.log(ex);
+        console.log(exception);
     }
 })();
 

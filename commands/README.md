@@ -39,29 +39,30 @@ node setaccount root
 
 If you are using RSK testnet or other network, create a new account:
 ```
-node newaccount root
+node genaccount root
 ```
 
-Then, fund the account. In RSK testnet, you can use (https://faucet.testnet.rsk.co)[https://faucet.testnet.rsk.co].
+Then, fund the account. In RSK testnet, you can use (https://faucet.rsk.co/)[https://faucet.rsk.co/].
 
-Deploy the `ProxyCreator`, `Counter`, `UtilityToken` and `Game` contracts:
+Deploy `Counter` and `ProxyManager` contracts using `root` account:
 
 ```
-node deploy
+node deploy root counter Counter
+node deploy root proxyManager ProxyManager
 ```
-They names are 'proxyCreator', 'counter', 'utoken' and 'game', respectively.
+They names are 'proxyManager' and 'counter', respectively.
 
 Create a new user:
 
 ```
-node newuser jack
+node genaccount alice
 ```
 
 A proxy contract is deployed to be used as the user identity. You can retrieve
 the proxy contract address running:
 
 ```
-node getproxy jack
+node invoke root proxyManager createProxy(address) alice
 ```
 
 You can call the deployed `Counter` contract instance, using:
@@ -78,41 +79,22 @@ node invoke jack counter increment()
 ```
 or
 ```
-node invoke jack counter add(uint256) 42
+node metainvoke alice root counter add(uint256) 42
 ```
 
 These transactions are invoked using the proxy contract assigned to the
-specified user.
+specified user `alice`. The transaction is send by `root`.
 
 You can check the new counter value running:
 ```
 node call counter counter()
 ```
 
-To invoke `Game` contract, the user should have utility tokens (each game play pays 10 utility tokens to the relayer account):
-```
-node invoke root utoken mint(address,uint256) alice;1000
-```
-
-To query the amount of tokens of a user:
-```
-node call token balanceOf(address) alice
-```
-
-To play a move to row 1, column 2
-```
-node invoke alice game play(uint256,uint256) 1;2
-```
-
-To query the owner of a game cell:
-```
-node call game owners(uint256,uint256) 1;2
-```
-
-Notice that after a game play the token balance of a user/player is decremented in 10 tokens.
-
 ## To be done
 
-- More contract examples to be deployed and invoked (ie, an ERC20 token)
+- More contract examples to be deployed and invoked (ie, an ERC20 token, a game)
+- Using tokens to pay sponsorship
+
+
 
 
