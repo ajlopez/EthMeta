@@ -8,6 +8,6 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "ethereumjs-util": "^6.1.0"
+    "ethereumjs-util": "^6.2.1"
   }
 }
