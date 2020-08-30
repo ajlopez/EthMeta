@@ -17,6 +17,7 @@ Meta Transactions for Ethereum/RSK, WIP
 - [Announcing The Generalized MetaTransaction Contest](https://medium.com/metamask/announcing-a-generalized-metatransaction-contest-abd4f321470b)
 - [any.sender + CyberDice 2.0 = 3 ETH prize](https://medium.com/anydot/any-sender-cyberdice-2-0-3-eth-prize-efacf1419add)
 - [Native Meta-Transaction Proposal Roundup](https://ethresear.ch/t/native-meta-transaction-proposal-roundup/7525/1)
+- [any.sender Ethereum transactions made simple](https://www.anydot.dev/)
 
 ## Versions
 
