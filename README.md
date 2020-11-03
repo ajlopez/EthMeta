@@ -19,6 +19,7 @@ Meta Transactions for Ethereum/RSK, WIP
 - [Native Meta-Transaction Proposal Roundup](https://ethresear.ch/t/native-meta-transaction-proposal-roundup/7525/1)
 - [any.sender Ethereum transactions made simple](https://www.anydot.dev/)
 - [How To Code Gas-Less Tokens on Ethereum](https://hackernoon.com/how-to-code-gas-less-tokens-on-ethereum-43u3ew4)
+- [Betting without ETH: DAI’s new permit feature](https://degens.medium.com/betting-without-eth-dais-new-permit-feature-5517293f3246)
 
 ## Versions
 
