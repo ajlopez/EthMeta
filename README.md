@@ -15,6 +15,7 @@ Meta Transactions for Ethereum/RSK, WIP
 - [PISA A Financially Accountable Watching* Network](https://docs.google.com/presentation/d/1ecIM6hZZLup9gGgpjORUcd09Vgl2qwGmOuUXYhhxtwI/edit#slide=id.g20b763e02be80df4_0)
 - [Crypto Cheque! Introduction to Message Signing in Ethereum](https://medium.com/coinmonks/crypto-cheque-introduction-to-message-signing-in-ethereum-1d14c8c42e21)
 - [Announcing The Generalized MetaTransaction Contest](https://medium.com/metamask/announcing-a-generalized-metatransaction-contest-abd4f321470b)
+- [scaffold-eth - signature recover example](https://github.com/austintgriffith/scaffold-eth/tree/signature-recover)
 
 ## Versions
 
