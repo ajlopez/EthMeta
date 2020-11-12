@@ -1,37 +1,27 @@
 
-const rskapi = require('rskapi');
+const utils = require('./lib/utils');
+const rskapi = utils.rskapi;
 
-const fs = require('fs');
+const config = utils.loadConfiguration('./config.json');
 
-let config;
-
-try {
-    config = require('./config.json');
-}
-catch (ex) {
-    config = {};
-}
-
-if (!config.accounts)
-    config.accounts = {};
-
-const host = rskapi.host(config.host);
 const name = process.argv[2];
 const address = process.argv[3];
 
-(async function() {
-    const accounts = await host.getAccounts();
-    let account;
+const client = rskapi.client(config.host);
+
+if (address && address.length <= 2)
+    (async function() {
+        const accounts = await client.accounts();
+        config.accounts[name] = accounts[parseInt(address)];
+        
+        console.log('address', config.accounts[name]);
+        
+        utils.saveConfiguration('./config.json', config);
+    })();
+else {
+    config.accounts[name] = address;
+    console.log('address', config.accounts[name]);
     
-    if (address && address.length <= 2)
-        account = accounts[parseInt(address)];
-    else if (!address)
-        account = accounts[0];
-    else
-        account = address;
-    
-    config.accounts[name] = account;
-    
-    fs.writeFileSync('./config.json', JSON.stringify(config, null, 4));
-})();
+    utils.saveConfiguration('./config.json', config);
+}
 

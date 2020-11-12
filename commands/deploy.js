@@ -1,29 +1,39 @@
 
-const rskapi = require('rskapi');
-const txs = require('./lib/txs');
-const commands = require('./lib/commands');
-const fs = require('fs');
+const utils = require('./lib/utils');
+const rskapi = utils.rskapi;
 
-const config = require('./config.json');
+const config = utils.loadConfiguration('./config.json');
 
-if (!config.contracts)
-    config.contracts = {};
+const from = process.argv[2];
+const name = process.argv[3];
+const contractname = process.argv[4];
+let args = utils.getArguments(config, process.argv[5]);
 
-const host = rskapi.host(config.host);
+const contract = require('../build/contracts/' + contractname + '.json');
+
+const sender = utils.getAccount(config, from);
+
+const client = rskapi.client(config.host);
 
 (async function() {
     try {
-        await commands.deploy(host, config, 'root', 'ProxyManager', 'proxyManager');
-        await commands.deploy(host, config, 'root', 'Counter', 'counter');
-        await commands.deploy(host, config, 'root', 'UtilityToken', 'utoken');
-        await commands.deploy(host, config, 'root', 'Game', 'game', [ config.contracts.utoken ]);
-        const result = await commands.invoke(host, config, 'root', 'utoken', 'addPayer(address)', [ 'game' ]);
+        const txh = await client.deploy(sender, contract.bytecode, args);
+        console.log('transaction', txh);
+        const txr = await client.receipt(txh, 0);
         
-        if (result)
-            console.log('game is payer of utoken');
+        if (txr)
+            console.log('address', txr.contractAddress);
         
-        fs.writeFileSync('./config.json', JSON.stringify(config, null, 4));
-    } catch (ex) {
+        config.instances[name] = {
+            address: txr.contractAddress,
+            contract: contractname
+        };
+        
+        utils.saveConfiguration('./config.json', config);
+        
+        console.log('done');
+    }
+    catch (ex) {
         console.log(ex);
     }
 })();

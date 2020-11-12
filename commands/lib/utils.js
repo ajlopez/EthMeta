@@ -1,57 +1,46 @@
-// https://ethereum.stackexchange.com/questions/39384/how-to-generate-private-key-public-key-and-address
 
-var utils = require('ethereumjs-util');
+const fs = require('fs');
 
-function generateRandomHexaByte() {
-    var n = Math.floor(Math.random() * 255).toString(16);
-    
-    while (n.length < 2)
-        n = '0' + n;
-    
-    return n;
+let rskapi = null;
+let localrskapi = null;
+
+try {
+    rskapi = require('rskapi');
+}
+catch (ex) {
+    localrskapi = require('../../..');
 }
 
-function generateRandomPrivateKey() {
-    do {
-        var keytxt = '';
-        
-        for (var k = 0; k < 32; k++)
-            keytxt += generateRandomHexaByte();
-        
-        var key = new Buffer(keytxt, 'hex');
+function loadConfiguration(filename) {
+    try {
+        return JSON.parse(fs.readFileSync(filename).toString());
     }
-    while (!utils.isValidPrivate(key));
-    
-    return key;
+    catch (ex) {
+        return {
+            host: null,
+            accounts: {},
+            instances: {},
+            options: {}
+        };
+    }
 }
 
-function generateAddress() {
-    var privateKey = generateRandomPrivateKey();
-    var publicKey = '0x' + utils.privateToPublic(privateKey).toString('hex');
-    var address = '0x' + utils.privateToAddress(privateKey).toString('hex');
-    
-    if (!utils.isValidAddress(address))
-        throw new Error('invalid address: ' + address);
-    
-    return {
-        privateKey: '0x' + privateKey.toString('hex'),
-        publicKey: publicKey,
-        address: address
-    }
+function saveConfiguration(filename, config) {
+    fs.writeFileSync(filename, JSON.stringify(config, null, 4));
 }
 
 function getAddress(config, user) {
     if (user.substring(0, 2).toLowerCase() === '0x')
         return user;
     
-    if (!config.users)
-        return user;
-    
-    if (config.users[user])
-        if (config.users[user].address)
-            return config.users[user].address;
+    if (config.accounts && config.accounts[user])
+        if (config.accounts[user].address)
+            return config.accounts[user].address;
         else
-            return config.users[user];
+            return config.accounts[user];
+        
+    if (config.instances && config.instances[user])
+        return config.instances[user].address;
         
     return user;
 }
@@ -89,11 +78,42 @@ function getValue(value) {
     return parseInt(value);
 }
 
+function processArgument(config, arg) {
+    if (config.accounts && config.accounts[arg])
+        if (config.accounts[arg].address)
+            return config.accounts[arg].address;
+        else
+            return config.accounts[arg];
+        
+    if (config.instances && config.instances[arg])
+        return config.instances[arg].address;
+        
+    return arg;
+}
+
+function processArguments(config, args) {
+    if (!args)
+        return null;
+    
+    if (typeof args === 'string')
+        args = args.split(';');
+    
+    for (let k = 0, l = args.length; k < l; k++)
+        args[k] = processArgument(config, args[k]);
+    
+    return args;
+}
+
 module.exports = {
+    rskapi: rskapi ? rskapi : localrskapi,
+    
     getAddress: getAddress,
     getInstanceAddress: getInstanceAddress,
     getAccount: getAccount,
     getValue: getValue,
-    generateAddress: generateAddress
+    getArguments: processArguments,
+    
+    loadConfiguration: loadConfiguration,
+    saveConfiguration: saveConfiguration
 };
 

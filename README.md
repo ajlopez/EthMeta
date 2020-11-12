@@ -15,6 +15,12 @@ Meta Transactions for Ethereum/RSK, WIP
 - [PISA A Financially Accountable Watching* Network](https://docs.google.com/presentation/d/1ecIM6hZZLup9gGgpjORUcd09Vgl2qwGmOuUXYhhxtwI/edit#slide=id.g20b763e02be80df4_0)
 - [Crypto Cheque! Introduction to Message Signing in Ethereum](https://medium.com/coinmonks/crypto-cheque-introduction-to-message-signing-in-ethereum-1d14c8c42e21)
 - [Announcing The Generalized MetaTransaction Contest](https://medium.com/metamask/announcing-a-generalized-metatransaction-contest-abd4f321470b)
+- [any.sender + CyberDice 2.0 = 3 ETH prize](https://medium.com/anydot/any-sender-cyberdice-2-0-3-eth-prize-efacf1419add)
+- [Native Meta-Transaction Proposal Roundup](https://ethresear.ch/t/native-meta-transaction-proposal-roundup/7525/1)
+- [any.sender Ethereum transactions made simple](https://www.anydot.dev/)
+- [How To Code Gas-Less Tokens on Ethereum](https://hackernoon.com/how-to-code-gas-less-tokens-on-ethereum-43u3ew4)
+- [Betting without ETH: DAI’s new permit feature](https://degens.medium.com/betting-without-eth-dais-new-permit-feature-5517293f3246)
+- [EIP-2612: permit – 712-signed approvals](https://eips.ethereum.org/EIPS/eip-2612)
 - [scaffold-eth - signature recover example](https://github.com/austintgriffith/scaffold-eth/tree/signature-recover)
 
 ## Versions
