@@ -24,6 +24,7 @@ Meta Transactions for Ethereum/RSK, WIP
 - [scaffold-eth - signature recover example](https://github.com/austintgriffith/scaffold-eth/tree/signature-recover)
 - [Gasless or Meta Transactions](https://medium.com/coinmonks/gasless-transactions-f75382095c4f)
 - [How to build a relay as a service in Bitcoin](https://stonecoldpat.medium.com/how-to-build-a-relay-as-a-service-in-bitcoin-b37368661c2)
+- [ETC Labs Provides OpenGSN with a Second Grant](https://medium.com/ethereum-classic-labs/etc-labs-provides-opengsn-with-a-second-grant-7ae2cfc65020)
 
 ## Versions
 
