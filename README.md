@@ -22,6 +22,8 @@ Meta Transactions for Ethereum/RSK, WIP
 - [Betting without ETH: DAI’s new permit feature](https://degens.medium.com/betting-without-eth-dais-new-permit-feature-5517293f3246)
 - [EIP-2612: permit – 712-signed approvals](https://eips.ethereum.org/EIPS/eip-2612)
 - [scaffold-eth - signature recover example](https://github.com/austintgriffith/scaffold-eth/tree/signature-recover)
+- [Gasless or Meta Transactions](https://medium.com/coinmonks/gasless-transactions-f75382095c4f)
+- [How to build a relay as a service in Bitcoin](https://stonecoldpat.medium.com/how-to-build-a-relay-as-a-service-in-bitcoin-b37368661c2)
 
 ## Versions
 
