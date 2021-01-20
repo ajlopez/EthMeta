@@ -27,6 +27,8 @@ Meta Transactions for Ethereum/RSK, WIP
 - [ETC Labs Provides OpenGSN with a Second Grant](https://medium.com/ethereum-classic-labs/etc-labs-provides-opengsn-with-a-second-grant-7ae2cfc65020)
 - [RIF Enveloping: sponsored transactions](https://medium.com/iovlabs-innovation-stories/rif-enveloping-sponsored-transactions-f2ab624c7c4d)
 - [How to avoid gas fees with Loopring](https://newsletter.banklesshq.com/p/how-to-avoid-gas-fees-with-loopring)
+- [Ethereum: Signing and Validating](https://medium.com/@angellopozo/ethereum-signing-and-validating-13a2d7cb0ee3)
+- [ECRECOVER example](https://github.com/sogoiii/ecrecover-example)
 
 ## Versions
 
