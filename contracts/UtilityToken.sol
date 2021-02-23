@@ -1,25 +1,19 @@
-pragma solidity >=0.5.0 <0.6.0;
+pragma solidity ^0.6.0;
 
-import "./zeppelin/ERC20.sol";
-import "./zeppelin/ERC20Mintable.sol";
-import "./zeppelin/PayerRole.sol";
+import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 
-contract UtilityToken is ERC20, ERC20Mintable, PayerRole {
+contract UtilityToken is ERC20 {
     mapping (address => bool) public users;
     
-    constructor() public {
+    constructor(string memory name, string memory symbol) ERC20(name, symbol) public {
     }
     
-    function mint(address account, uint256 amount) public onlyMinter returns (bool) {
-        bool result = super.mint(account, amount);
-        
-        if (result)
-            users[account] = true;
-            
-        return result;
+    function mint(address account, uint256 amount) public {
+        _mint(account, amount);
+        users[account] = true;
     }
     
-    function pay(address user, address recipient, uint256 amount) public onlyPayer returns (bool) {
+    function pay(address user, address recipient, uint256 amount) public returns (bool) {
         require(users[user]);
         
         _transfer(user, recipient, amount);
@@ -27,12 +21,12 @@ contract UtilityToken is ERC20, ERC20Mintable, PayerRole {
         return true;
     }
     
-    function transfer(address recipient, uint256 amount) public returns (bool) {
+    function transfer(address recipient, uint256 amount) public override returns (bool) {
         require(!users[msg.sender]);
         return super.transfer(recipient, amount);
     }
     
-    function approve(address spender, uint256 amount) public returns (bool) {
+    function approve(address spender, uint256 amount) public override returns (bool) {
         require(!users[msg.sender]);
         return super.approve(spender, amount);
     }    

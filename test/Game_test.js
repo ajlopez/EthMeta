@@ -11,10 +11,11 @@ contract('Game', function (accounts) {
     const charlie = accounts[2];
 
     beforeEach(async function() {
-        this.token = await UtilityToken.new();
+        this.token = await UtilityToken.new('Utility Token', 'UTI');
         this.game = await Game.new(this.token.address);
         
-        await this.token.addPayer(this.game.address);
+        // TODO payer role
+        //await this.token.addPayer(this.game.address);
         
         this.user = await User.new(this.game.address);
     });

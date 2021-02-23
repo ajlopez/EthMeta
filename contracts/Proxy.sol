@@ -1,4 +1,4 @@
-pragma solidity >=0.5.0 <0.6.0;
+pragma solidity ^0.6.0;
 
 import "./ECDSA.sol";
 
@@ -18,7 +18,7 @@ contract Proxy {
         nonce++;
         
         assembly {
-            pop(call(gas, to, value, add(data, 0x20), mload(data), 0, 0))
+            pop(call(gas(), to, value, add(data, 0x20), mload(data), 0, 0))
         }
     }
     
